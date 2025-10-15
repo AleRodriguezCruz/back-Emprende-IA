@@ -1,4 +1,4 @@
-# back-Emprende-IA
+
 Emprende IA: Design Doc del Backend
 
 Link: (Link a este documento)
