@@ -30,7 +30,7 @@ Contenido
 
 Objetivo
 
-Construir un servicio de backend para Emprende IA. Este servicio recibirá una ubicación y, utilizando una lista de negocios existentes, identificará y devolverá las categorías de comercios con menor competencia en esa zona para ayudar a los emprendedores a tomar decisiones informadas.
+Construir un servicio de backend para Emprende IA. Este servicio recibirá una ubicación y, utilizando una lista de negocios existentes extraida del db-ens-bc.csv, identificará y devolverá las categorías de comercios con menor competencia en esa zona para ayudar a los emprendedores a tomar decisiones informadas.
 Goals
 
     Procesar una consulta de texto (ej. "¿Qué negocios faltan en Maneadero?") para identificar una zona geográfica predefinida.
@@ -53,12 +53,13 @@ Non-Goals
 
 Background
 
-Muchos emprendedores eligen su próximo negocio basándose en la intuición, lo que aumenta el riesgo de fracaso en mercados competidos. Emprende IA se creó para ofrecer una herramienta simple basada en datos que muestre la densidad comercial de una zona. La versión actual es un prototipo funcional hecho con Streamlit.
+Muchos emprendedores eligen su próximo negocio basándose en la intuición, lo que aumenta el riesgo de fracaso en mercados competidos. Emprende IA se creara para ofrecer una herramienta simple basada en datos que muestre la densidad comercial de una zona. 
+
 Overview
 
 El sistema es una aplicación de Python que utiliza la librería Pandas para el análisis de datos. La lógica principal consiste en cargar un archivo CSV con datos de negocios, interpretar la solicitud del usuario para identificar una zona, aplicar un filtro geográfico, contar los negocios por categoría para encontrar las menos comunes y preparar los resultados.
 Detailed Design
-Solución 1: Prototipo Actual (Monolítico con Streamlit)
+Solución 1: Prototipo  (Streamlit)
 
 En esta fase, el frontend y el backend están fuertemente acoplados en una única aplicación.
 Backend/Frontend
