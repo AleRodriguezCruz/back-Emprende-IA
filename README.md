@@ -1,5 +1,5 @@
-
-Emprende IA: Design Doc del Backend
+Backend Emprende IA
+Design Doc del Backend
 
 Link: (Link a este documento)
 
@@ -31,6 +31,7 @@ Contenido
 Objetivo
 
 Construir un servicio de backend para Emprende IA. Este servicio recibirá una ubicación y, utilizando una lista de negocios existentes extraida del db-ens-bc.csv, identificará y devolverá las categorías de comercios con menor competencia en esa zona para ayudar a los emprendedores a tomar decisiones informadas.
+
 Goals
 
     Procesar una consulta de texto (ej. "¿Qué negocios faltan en Maneadero?") para identificar una zona geográfica predefinida.
