@@ -88,7 +88,7 @@ Backend desacoplado que mantiene datos en memoria y ofrece endpoint para consult
 
 ## Links
 
-- Repositorio del proyecto: (inserta enlace)  
+- Repositorio del proyecto:   https://github.com/AleRodriguezCruz/back-Emprende-IA.git
 - Pandas Docs: https://pandas.pydata.org/docs/  
 - Flask Docs: https://flask.palletsprojects.com/en/latest/  
 
