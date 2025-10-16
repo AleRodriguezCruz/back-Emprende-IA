@@ -1,126 +1,96 @@
-Backend Emprende IA
-Design Doc del Backend
+# Emprende IA - Backend
 
-Link: (Link a este documento)
-
-Author(s): Alejandra Rodriguez de la Cruz
-
-Status: [Draft]
-
+Link: (Agrega aquí el enlace a tu repositorio o documentación)  
+Author(s): Alejandra Rodríguez de la Cruz  
+Status: Draft  
 Última actualización: 2024-10-14
-Contenido
 
-    Objetivo
+---
 
-    Goals
+## Contenido
 
-    Non-Goals
+- [Objetivo](#objetivo)  
+- [Goals](#goals)  
+- [Non-Goals](#non-goals)  
+- [Background](#background)  
+- [Overview](#overview)  
+- [Detailed Design](#detailed-design)  
+- [Consideraciones](#consideraciones)  
+- [Métricas](#métricas)  
+- [Links](#links)  
+- [Licencia](#licencia)  
 
-    Background
+---
 
-    Overview
+## Objetivo
 
-    Detailed Design
+Crear un backend que ayude a emprendedores a descubrir qué tipos de negocios tienen menos competencia en una zona específica, para facilitar decisiones informadas.
 
-    Consideraciones
+---
 
-    Métricas
+## Goals
 
-    Links
+- Identificar zonas geográficas desde consultas de texto.  
+- Filtrar negocios existentes en la zona indicada.  
+- Encontrar las categorías de negocio con menor saturación.  
+- Entregar datos que permitan mostrar esas oportunidades en un mapa.  
 
-Objetivo
+---
 
-Construir un servicio de backend para Emprende IA. Este servicio recibirá una ubicación y, utilizando una lista de negocios existentes extraida del db-ens-bc.csv, identificará y devolverá las categorías de comercios con menor competencia en esa zona para ayudar a los emprendedores a tomar decisiones informadas.
+## Non-Goals
 
-Goals
+- No análisis predictivo de éxito comercial.  
+- No manejo de usuarios ni almacenamiento de búsquedas.  
+- No actualización automática del dataset.  
+- Solo funciona con zonas definidas.  
 
-    Procesar una consulta de texto (ej. "¿Qué negocios faltan en Maneadero?") para identificar una zona geográfica predefinida.
+---
 
-    Filtrar un conjunto de datos para aislar los negocios que se encuentran cerca del área de interés.
+## Background
 
-    Calcular y devolver una lista de categorías de negocios con baja saturación (oportunidades).
+Muchos emprenden sin suficientes datos, lo que puede ser riesgoso. Este proyecto aporta información sencilla basada en datos para elegir oportunidades con menos competencia.
 
-    Proveer los datos geolocalizados de los negocios existentes para que un frontend pueda visualizarlos en un mapa.
+---
 
-Non-Goals
+## Overview
 
-    Ofrecer análisis predictivo sobre el éxito de un negocio.
+Aplicación en Python con Pandas y Flask que carga un CSV con datos de negocios, procesa consultas y devuelve oportunidades y negocios geolocalizados vía API REST.
 
-    Soportar el registro de usuarios o el almacenamiento de búsquedas.
+---
 
-    Actualizar la base de datos de negocios en tiempo real desde fuentes externas.
+## Detailed Design
 
-    Soportar consultas de áreas geográficas no predefinidas en el sistema.
+### Solución 1: Prototipo Streamlit
 
-Background
+Backend y frontend juntos para demostración rápida, procesamiento de texto, filtro geográfico y resultados simples.
 
-Muchos emprendedores eligen su próximo negocio basándose en la intuición, lo que aumenta el riesgo de fracaso en mercados competidos. Emprende IA se creara para ofrecer una herramienta simple basada en datos que muestre la densidad comercial de una zona. 
+### Solución 2: API REST con Flask
 
-Overview
+Backend desacoplado que mantiene datos en memoria y ofrece endpoint para consultas estructuradas y respuesta JSON clara.
 
-El sistema es una aplicación de Python que utiliza la librería Pandas para el análisis de datos. La lógica principal consiste en cargar un archivo CSV con datos de negocios, interpretar la solicitud del usuario para identificar una zona, aplicar un filtro geográfico, contar los negocios por categoría para encontrar las menos comunes y preparar los resultados.
-Detailed Design
-Solución 1: Prototipo  (Streamlit)
+---
 
-En esta fase, el frontend y el backend están fuertemente acoplados en una única aplicación.
-Backend/Frontend
+## Consideraciones
 
-    Carga de datos: Una función carga el datos_ensenada.csv en un DataFrame de Pandas, usando el caché de Streamlit para optimizar.
+- Simplicidad y mantenimiento son prioridad.  
+- Filtro geográfico en bounding box suficiente para el alcance.  
+- Dependencia de la calidad y actualización del CSV.  
+- No preparado para datos masivos sin optimización.  
 
-    Procesamiento de Lenguaje: Se realiza una búsqueda simple de subcadenas (ej. "Maneadero") en la consulta del usuario.
+---
 
-    Filtro Geográfico: Se utiliza una aproximación de "cuadro delimitador" (bounding box) para filtrar los negocios en un área rectangular alrededor de un punto central.
+## Métricas
 
-    Lógica de Negocio: Se usa value_counts() y nsmallest(5) de Pandas para encontrar las 5 categorías con menor frecuencia.
+- Tiempo de respuesta medido en milisegundos.  
+- Porcentaje de consultas con zona identificada y respuesta válida.  
 
-Solución 2: Backend Desacoplado con API REST
+---
 
-Esta es la evolución planificada, separando la lógica en un servicio independiente para mayor flexibilidad y escalabilidad.
-Frontend
+## Links
 
-    Será cualquier cliente (aplicación web, móvil, etc.) capaz de consumir una API REST. No es parte del alcance de este backend.
+- Repositorio del proyecto: (inserta enlace)  
+- Pandas Docs: https://pandas.pydata.org/docs/  
+- Flask Docs: https://flask.palletsprojects.com/en/latest/  
 
-Backend (Flask y Pandas)
+---
 
-    Framework: Se usará Flask para construir los endpoints de la API.
-
-    Manejo de Datos: El servidor Flask cargará el archivo CSV en un DataFrame de Pandas al iniciar. Este DataFrame se mantendrá en memoria para atender todas las solicitudes, eliminando la necesidad de una base de datos externa.
-
-    Endpoint Principal: Se definirá una ruta como GET /api/v1/oportunidades que aceptará parámetros de consulta como ?zona=maneadero.
-
-    Respuesta (JSON): El servicio devolverá una respuesta estructurada en formato JSON para que el frontend la pueda interpretar fácilmente.
-
-    {
-      "zona_analizada": "Maneadero",
-      "oportunidades": [
-        "Ferretería",
-        "Papelería",
-        "Gimnasio"
-      ],
-      "negocios_existentes": [
-        {"nombre": "Tacos El Fénix", "categoria": "Restaurante", "lat": 31.715, "lon": -116.568},
-        {"nombre": "Abarrotes Mary", "categoria": "Tienda de abarrotes", "lat": 31.716, "lon": -116.565}
-      ]
-    }
-
-Consideraciones
-
-    Simpleza: El enfoque con Flask y Pandas permite centrarse en los fundamentos de la creación de APIs sin la complejidad de una base de datos.
-
-    Precisión Geográfica: Se mantendrá el método del "cuadro delimitador", que es suficiente para el alcance del proyecto.
-
-    Calidad de los Datos: La utilidad de las recomendaciones depende directamente de la calidad del archivo CSV.
-
-    Escalabilidad: Cargar el CSV en memoria es práctico para el conjunto de datos actual, pero no sería viable para un conjunto de datos a nivel nacional.
-
-Métricas
-
-    Tiempo de respuesta: Medir el tiempo en milisegundos que tarda la API en procesar y devolver una respuesta.
-
-    Tasa de éxito de consulta: Porcentaje de solicitudes que identifican una zona correctamente y devuelven un análisis válido.
-
-Links
-
-    Repositorio del Proyecto
-
-    Documentación de Pandas
