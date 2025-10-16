@@ -1,6 +1,6 @@
 # Emprende IA - Backend
 
-Link: (Agrega aquí el enlace a tu repositorio o documentación)  
+Link:   https://github.com/AleRodriguezCruz/back-Emprende-IA
 Author(s): Alejandra Rodríguez de la Cruz  
 Status: Draft  
 Última actualización: 2024-10-14
