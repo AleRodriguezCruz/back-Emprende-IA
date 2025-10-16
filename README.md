@@ -24,7 +24,7 @@ Status: Draft
 
 ## Objetivo
 
-Crear un backend que ayude a emprendedores a descubrir qué tipos de negocios tienen menos competencia en una zona específica, para facilitar decisiones informadas.
+Construir un servicio backend para Emprende IA que reciba una ubicación y, usando la lista de negocios del archivo db-ens-bc.csv, identifique y devuelva las categorías de comercios con menor competencia en esa zona. Esta información ayudará a emprendedores a tomar decisiones basadas en datos.
 
 ---
 
