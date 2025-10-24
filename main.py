@@ -28,7 +28,7 @@ class Negocio(BaseModel):
 # Usamos un bloque try-except para manejar el error si el archivo no se encuentra.
 try:
     # Definimos la ruta del archivo que está en la misma carpeta
-    DATA_PATH = "db-ens-bc-Emprende.csv"
+    DATA_PATH = "datos_ensenada.csv"
     
     # Leemos el archivo CSV usando pandas
     df = pd.read_csv(DATA_PATH, encoding='latin1')
@@ -197,3 +197,4 @@ def eliminar_negocio(clee: str):
     df.to_csv(DATA_PATH, index=False, encoding='latin1')
     
     return {"mensaje": f"Negocio con clee '{clee}' eliminado exitosamente."}
+
