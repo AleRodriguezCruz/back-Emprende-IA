@@ -85,7 +85,74 @@ Backend desacoplado que mantiene datos en memoria y ofrece endpoint para consult
 - Porcentaje de consultas con zona identificada y respuesta válida.  
 
 ---
+## Cómo Usar la API (Endpoints)
 
+La API sigue los principios REST y utiliza el prefijo base `/excel/negocio`.
+
+---
+
+### 1. Obtener todos los negocios
+Devuelve una lista con todos los negocios del archivo CSV.
+
+* **Método:** `GET`
+* **Ruta:** `/excel/negocio/`
+* **Respuesta Exitosa (200 OK):**
+    ```json
+    [
+      {
+        "id": 0,
+        "categoria_negocio": "ABULONES CULTIVADOS",
+        "latitud": 31.8621572,
+        "longitud": -116.6267073
+      },
+      {
+        "id": 1,
+        "categoria_negocio": "AGRICOLA DOS MARES",
+        "latitud": 31.06657818,
+        "longitud": -116.2098943
+      }
+    ]
+    ```
+
+---
+
+### 2. Obtener un negocio por su ID
+Busca y devuelve un negocio específico usando su ID (el número de fila del archivo).
+
+* **Método:** `GET`
+* **Ruta:** `/excel/negocio/{negocio_id}`
+* **Parámetros:**
+    * `negocio_id` (entero): El ID del negocio que deseas obtener.
+* **Respuesta Exitosa (200 OK):**
+    ```json
+    {
+      "id": 0,
+      "categoria_negocio": "ABULONES CULTIVADOS",
+      "latitud": 31.8621572,
+      "longitud": -116.6267073
+    }
+    ```
+* **Respuesta de Error (404 Not Found):**
+    ```json
+    {
+      "detail": "Negocio con ID '9999' no encontrado."
+    }
+    ```
+
+---
+
+### 3. Crear, Actualizar y Eliminar (Simulados)
+Los siguientes endpoints están implementados pero funcionan como una simulación, ya que no modifican permanentemente el archivo en un entorno como Vercel.
+
+* **Crear un Negocio:**
+    * **Método:** `POST`
+    * **Ruta:** `/excel/negocio/`
+* **Actualizar un Negocio:**
+    * **Método:** `PUT`
+    * **Ruta:** `/excel/negocio/{negocio_id}`
+* **Eliminar un Negocio:**
+    * **Método:** `DELETE`
+    * **Ruta:** `/excel/negocio/{negocio_id}`
 ## Links
 
 - Repositorio del proyecto:   https://github.com/AleRodriguezCruz/back-Emprende-IA.git
