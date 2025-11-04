@@ -1,0 +1,98 @@
+// Database Schema for DENUE Opportunities API
+// Generated: 2025-11-04
+// Visualize at: https://dbdiagram.io/d
+
+Table establecimientos {
+  id varchar(50) [primary key]
+  clee varchar(50) [not null, unique]
+  nom_estab varchar(255)
+  raz_social varchar(255)
+  per_ocu varchar(50)
+  tipo_unidad_economica varchar(50)
+  latitud decimal(10,8)
+  longitud decimal(11,8)
+  fecha_registro date
+  cve_entidad_fk integer
+  cve_municipio_fk integer
+  codigo_act varchar(10)
+  categoria_negocio varchar(50)
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  indexes {
+    clee [unique]
+    categoria_negocio
+    (latitud, longitud)
+  }
+}
+
+Table direcciones {
+  id serial [primary key]
+  establecimiento_id varchar(50) [not null]
+  tipo_vial varchar(50)
+  nom_vial varchar(255)
+  numero_ext varchar(20)
+  tipo_asent varchar(50)
+  nomb_asent varchar(255)
+  cod_postal varchar(10)
+  ageb varchar(10)
+  manzana varchar(10)
+  latitud decimal(10,8)
+  longitud decimal(11,8)
+  
+  indexes {
+    establecimiento_id
+    cod_postal
+    (latitud, longitud)
+  }
+}
+
+Table contactos {
+  id serial [primary key]
+  establecimiento_id varchar(50) [not null]
+  tipo_contacto varchar(20) [not null]
+  valor varchar(255) [not null]
+  
+  indexes {
+    establecimiento_id
+    tipo_contacto
+  }
+}
+
+Table municipios {
+  cve_municipio integer [primary key]
+  cve_entidad integer [not null]
+  nombre_municipio varchar(255) [not null]
+  nombre_entidad varchar(255) [not null]
+}
+
+Table actividades_economicas {
+  codigo_act varchar(10) [primary key]
+  descripcion varchar(255)
+  categoria_negocio varchar(50)
+}
+
+
+
+
+Table oportunidades_negocio {
+  id serial [primary key]
+  establecimiento_base_nombre varchar(255)
+  tipo_base varchar(50)
+  direccion_base text
+  municipio_base varchar(100)
+  oportunidades_faltantes text
+  negocios_existentes text
+  radio_analisis_metros integer [default: 1000]
+  fecha_analisis timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  indexes {
+    tipo_base
+    municipio_base
+  }
+}
+
+// Relaciones principales
+Ref: establecimientos.id - direcciones.establecimiento_id
+Ref: establecimientos.id - contactos.establecimiento_id
+Ref: municipios.cve_municipio - establecimientos.cve_municipio_fk
+Ref: actividades_economicas.codigo_act - establecimientos.codigo_act
