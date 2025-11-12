@@ -58,11 +58,16 @@ Table contactos {
   }
 }
 
+// Tabla corregida con llave primaria compuesta
 Table municipios {
-  cve_municipio integer [primary key]
+  cve_municipio integer [not null]
   cve_entidad integer [not null]
   nombre_municipio varchar(255) [not null]
   nombre_entidad varchar(255) [not null]
+  
+  indexes {
+    (cve_entidad, cve_municipio) [pk]
+  }
 }
 
 Table actividades_economicas {
@@ -70,9 +75,6 @@ Table actividades_economicas {
   descripcion varchar(255)
   categoria_negocio varchar(50)
 }
-
-
-
 
 Table oportunidades_negocio {
   id serial [primary key]
@@ -91,8 +93,8 @@ Table oportunidades_negocio {
   }
 }
 
-// Relaciones principales
-Ref: establecimientos.id - direcciones.establecimiento_id
-Ref: establecimientos.id - contactos.establecimiento_id
-Ref: municipios.cve_municipio - establecimientos.cve_municipio_fk
-Ref: actividades_economicas.codigo_act - establecimientos.codigo_act
+// Relaciones principales (con sintaxis corregida)
+Ref: establecimientos.id < direcciones.establecimiento_id
+Ref: establecimientos.id < contactos.establecimiento_id
+Ref: municipios.(cve_entidad, cve_municipio) < establecimientos.(cve_entidad_fk, cve_municipio_fk)
+Ref: actividades_economicas.codigo_act < establecimientos.codigo_act
